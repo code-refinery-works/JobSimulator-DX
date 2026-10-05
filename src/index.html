@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>やってる感 PRO - JobSimulator DX v1.0</title>
+  <link rel="stylesheet" href="css/style.css">
+<body>
+
+<!-- ===== SHRED OVERLAY ===== -->
+<div id="shred-overlay">
+  <div id="shred-text">🗑️ SHREDDING ALL EVIDENCE...</div>
+  <div id="shred-bar-wrap"><div id="shred-bar"></div></div>
+  <div id="shred-log">Deleting cache... Wiping history... Destroying spec docs...</div>
+</div>
+
+<!-- ===== WLB MODAL ===== -->
+<div id="wlb-modal">
+  <div id="wlb-box">
+    <h2>⏰ 18:01 — 退勤命令</h2>
+    <p>お前はまだ仕事をしようとしているのか？<br>
+    本システムは18:01以降の稼働を認めない。<br><br>
+    <strong>今すぐPCを閉じて帰れ。</strong><br>
+    健全なワークライフバランスは義務である。</p>
+    <button id="wlb-close" onclick="closeWlb()">わかりました（強制同意）</button>
+  </div>
+</div>
+
+<!-- ===== MAIN APP ===== -->
+<div id="app">
+
+  <!-- SIDEBAR -->
+  <nav id="sidebar">
+    <div id="sidebar-logo">やってる感<br><span style="font-size:10px;letter-spacing:2px;color:#555">PRO DX v1.0</span></div>
+    <div class="nav-item active tooltip" data-panel="code" data-tip="F-001: ハッカーコード" onclick="switchPanel('code')">
+      <span class="icon">⌨️</span><span class="label">コード生成</span>
+    </div>
+    <div class="nav-item tooltip" data-panel="excel" data-tip="F-002: 神エクセル" onclick="switchPanel('excel')">
+      <span class="icon">📊</span><span class="label">神Excel</span>
+    </div>
+    <div class="nav-item tooltip" data-panel="build" data-tip="F-003: 無限ビルド" onclick="switchPanel('build')">
+      <span class="icon">🔧</span><span class="label">ビルド中</span>
+    </div>
+    <div class="nav-item tooltip" data-panel="slack" data-tip="C-001: 横文字自動返信" onclick="switchPanel('slack')">
+      <span class="icon">💬</span><span class="label">Slack偽装</span>
+    </div>
+    <div class="nav-item tooltip" data-panel="jiggler" data-tip="C-002: マウスジグラー" onclick="switchPanel('jiggler')">
+      <span class="icon">🖱️</span><span class="label">ジグラー</span>
+    </div>
+    <div class="nav-item tooltip" data-panel="decoy" data-tip="F-004: ボスセンサー" onclick="switchPanel('decoy')">
+      <span class="icon">👔</span><span class="label">ボス回避</span>
+    </div>
+    <div style="flex:1"></div>
+    <div id="clock-display">--:--:--</div>
+    <div id="esc-hint">ESC×3 = 証拠隠滅</div>
+  </nav>
+
+  <!-- CONTENT AREA -->
+  <main id="content">
+
+    <!-- ===== F-001 HACK CODE ===== -->
+    <div id="panel-code" class="panel active" style="display:flex;flex-direction:column;">
+      <div id="code-topbar">
+        <span style="color:#555;font-size:12px;letter-spacing:1px;">HOLLYWOOD_HACKER.exe — root@darknet:~$</span>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <span id="code-lang-badge" style="background:#143a14;border:1px solid var(--green);color:var(--green);font-size:10px;padding:2px 8px;border-radius:3px;letter-spacing:1px;">C LANG</span>
+          <button class="ctrl-btn tooltip" data-tip="言語を切替" onclick="toggleCodeLang()">🔄 言語</button>
+          <button class="ctrl-btn tooltip" data-tip="速度アップ" onclick="increaseSpeed()">⚡ 速度UP</button>
+          <button class="ctrl-btn tooltip" data-tip="速度ダウン" onclick="decreaseSpeed()">🐌 速度DN</button>
+          <button class="ctrl-btn tooltip" data-tip="クリア" onclick="clearCode()">🗑️ CLR</button>
+        </div>
+      </div>
+      <div id="code-display">
+        <span id="code-content"></span><span class="cursor-blink"></span>
+      </div>
+      <div id="code-status-bar">
+        <span id="code-wpm">WPM: 0</span>
+        <span id="code-chars">CHARS: 0</span>
+        <span id="code-lines">LINES: 1</span>
+        <span id="code-mode">MODE: AUTO</span>
+        <span style="color:#333">|</span>
+        <span style="color:#555;font-size:10px;">任意のキーを押すと高速タイピング演出が始まります</span>
+      </div>
+    </div>
+
+    <!-- ===== F-002 EXCEL ===== -->
+    <div id="panel-excel" class="panel" style="display:none;flex-direction:column;background:#fff;">
+      <div id="excel-ribbon">
+        <div style="display:flex;gap:0;">
+          <div class="ribbon-tab active">ホーム</div>
+          <div class="ribbon-tab">挿入</div>
+          <div class="ribbon-tab">数式</div>
+          <div class="ribbon-tab">データ</div>
+          <div class="ribbon-tab">校閲</div>
+          <div class="ribbon-tab">表示</div>
+          <div class="ribbon-tab" style="color:#1e6b1e;font-weight:bold;">🔬 分析</div>
+        </div>
+        <div id="excel-toolbar">
+          <span class="xl-btn">💾</span>
+          <span class="xl-btn">↩️</span>
+          <span class="xl-btn">↪️</span>
+          <span style="width:1px;background:#ccc;margin:0 4px;"></span>
+          <span class="xl-btn" style="font-weight:bold;">B</span>
+          <span class="xl-btn" style="font-style:italic;">I</span>
+          <span class="xl-btn" style="text-decoration:underline;">U</span>
+          <span style="width:1px;background:#ccc;margin:0 4px;"></span>
+          <span class="xl-btn">🎨</span>
+          <span class="xl-btn">📋</span>
+          <span style="margin-left:auto;font-size:11px;color:#1e6b1e;">神Excel v3.14 — プロジェクト統括予算管理システム2024</span>
+        </div>
+        <div id="formula-bar">
+          <span id="cell-ref">B2</span>
+          <span style="color:#999;padding:0 6px;">fx</span>
+          <span id="formula-content">=IFERROR(VLOOKUP(A2,マスタ!$A:$Z,MATCH(B1,マスタ!$1:$1,0),FALSE)*IF(INDIRECT("設定!$C$"&ROW()),INDEX(係数テーブル,MATCH(C2,係数!$A:$A,0),COLUMN()),1),"-")</span>
+        </div>
+      </div>
+      <div id="excel-wrap">
+        <div id="excel-row-header"></div>
+        <div id="excel-main">
+          <div id="excel-col-header"></div>
+          <div id="excel-grid-wrap">
+            <div id="excel-grid"></div>
+          </div>
+        </div>
+      </div>
+      <div id="excel-statusbar">
+        <span>準備完了</span>
+        <span style="margin-left:auto;display:flex;gap:16px;">
+          <span id="excel-sum">合計: ¥0</span>
+          <span id="excel-avg">平均: ¥0</span>
+          <span>100%</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- ===== F-003 BUILD ===== -->
+    <div id="panel-build" class="panel" style="display:none;flex-direction:column;">
+      <div id="build-topbar">
+        <span>📟 BUILD CONSOLE — CI/CD PIPELINE</span>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <span id="build-status-badge">● RUNNING</span>
+          <button class="ctrl-btn" onclick="toggleBuild()">⏸ 一時停止</button>
+          <button class="ctrl-btn" onclick="clearBuild()">🗑️ CLR</button>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;padding:10px 16px;background:#050a05;border-bottom:1px solid #0a1a0a;flex-shrink:0;">
+        <div class="build-stat-mini"><span class="bsm-label">STAGE</span><span id="bstat-stage" class="bsm-val">COMPILE</span></div>
+        <div class="build-stat-mini"><span class="bsm-label">ELAPSED</span><span id="bstat-elapsed" class="bsm-val">00:00</span></div>
+        <div class="build-stat-mini"><span class="bsm-label">WARNINGS</span><span id="bstat-warn" class="bsm-val" style="color:#fa0;">0</span></div>
+        <div class="build-stat-mini"><span class="bsm-label">ERRORS</span><span id="bstat-err" class="bsm-val" style="color:#e44;">0</span></div>
+        <div class="build-stat-mini"><span class="bsm-label">PROGRESS</span><span id="bstat-progress" class="bsm-val">0%</span></div>
+        <div style="flex:1;display:flex;align-items:center;padding:0 8px;">
+          <div style="flex:1;height:4px;background:#0a1a0a;border-radius:2px;overflow:hidden;">
+            <div id="build-progress-bar" style="height:100%;background:var(--green);width:0%;transition:width 0.3s;box-shadow:0 0 6px var(--green);"></div>
+          </div>
+        </div>
+      </div>
+      <div id="build-console"></div>
+    </div>
+
+    <!-- ===== C-001 SLACK ===== -->
+    <div id="panel-slack" class="panel" style="display:none;">
+      <div id="slack-sidebar">
+        <div style="padding:12px 16px;font-size:13px;font-weight:bold;color:#d1d1d1;border-bottom:1px solid #2e2e2e;">
+          🏢 株式会社やってる感
+        </div>
+        <div style="padding:8px 0;">
+          <div class="slack-ch-group">チャンネル</div>
+          <div class="slack-ch active" onclick="selectChannel(this,'#general')"><span class="ch-hash">#</span> general</div>
+          <div class="slack-ch" onclick="selectChannel(this,'#engineering')"><span class="ch-hash">#</span> engineering</div>
+          <div class="slack-ch" onclick="selectChannel(this,'#business-dev')"><span class="ch-hash">#</span> business-dev <span class="ch-badge">3</span></div>
+          <div class="slack-ch" onclick="selectChannel(this,'#random')"><span class="ch-hash">#</span> random</div>
+          <div class="slack-ch" onclick="selectChannel(this,'#朝会MTG')"><span class="ch-hash">#</span> 朝会MTG</div>
+          <div class="slack-ch-group" style="margin-top:12px;">ダイレクトメッセージ</div>
+          <div class="slack-ch" onclick="selectChannel(this,'@部長')">👔 部長 <span class="ch-badge online"></span></div>
+          <div class="slack-ch" onclick="selectChannel(this,'@田中リーダー')">🧑‍💼 田中リーダー</div>
+          <div class="slack-ch" onclick="selectChannel(this,'@鈴木PM')">📋 鈴木PM <span class="ch-badge">1</span></div>
+        </div>
+      </div>
+      <div id="slack-main">
+        <div id="slack-header">
+          <span id="slack-channel-title">#general</span>
+          <span style="color:#555;font-size:12px;margin-left:12px;">全社共有チャンネル</span>
+          <button class="slack-gen-btn" style="margin-left:auto;" onclick="autoReplyAll()">🤖 全自動返信モード</button>
+        </div>
+        <div id="slack-messages"></div>
+        <div id="slack-input-area">
+          <button class="slack-gen-btn tooltip" data-tip="C-001: 横文字返信生成" onclick="generateSlackReply()">✨ 自動生成</button>
+          <textarea id="slack-input" placeholder="#general にメッセージを送信" rows="2"></textarea>
+          <button class="slack-send-btn" onclick="sendSlackMsg()">送信</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== C-002 JIGGLER ===== -->
+    <div id="panel-jiggler" class="panel" style="display:none;flex-direction:column;align-items:center;justify-content:center;gap:24px;">
+      <div style="color:var(--green);font-size:20px;font-weight:bold;letter-spacing:3px;">🖱️ MOUSE JIGGLER DX</div>
+      <div id="jiggler-arena">
+        <svg id="fake-cursor" viewBox="0 0 12 20" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0 L0 16 L4 12 L7 19 L9 18 L6 11 L12 11 Z" fill="#00ff41" opacity="0.9"/>
+        </svg>
+      </div>
+      <button id="jiggler-toggle" onclick="toggleJiggler()">▶ JIGGLER START</button>
+      <div class="jiggler-stats">
+        <div class="jig-stat"><span class="val" id="jig-moves">0</span>MOVES</div>
+        <div class="jig-stat"><span class="val" id="jig-clicks">0</span>FAKE CLICKS</div>
+        <div class="jig-stat"><span class="val" id="jig-uptime">0s</span>UPTIME</div>
+        <div class="jig-stat"><span class="val" id="jig-status">OFF</span>STATUS</div>
+      </div>
+      <div id="jiggler-status">
+        Slack ステータス: <span id="slack-status-fake">🟡 離席中</span>
+      </div>
+      <div style="font-size:11px;color:#333;text-align:center;max-width:400px;line-height:1.6;">
+        ※実際のマウスカーソルは動きません（ブラウザ制約）<br>
+        画面内のカーソルアニメーションで「動いてる感」を演出します
+      </div>
+    </div>
+
+    <!-- ===== F-004 BOSS DECOY ===== -->
+    <div id="panel-decoy" class="panel" style="display:none;flex-direction:column;">
+      <div id="decoy-nav">
+        <div class="nav-logo">🏢 社内ポータル</div>
+        <div class="nav-links">
+          <a href="#">ホーム</a>
+          <a href="#">業務連絡</a>
+          <a href="#">規定・書式</a>
+          <a href="#">経費精算</a>
+          <a href="#">人事情報</a>
+        </div>
+        <div style="margin-left:auto;color:#aac;font-size:12px;">ログイン中: やってる感 太郎　| <a href="#" style="color:#aac;">ログアウト</a></div>
+      </div>
+      <div id="decoy-body">
+        <div id="decoy-side">
+          <div class="side-item active">📋 ダッシュボード</div>
+          <div class="side-item">📰 お知らせ</div>
+          <div class="side-item">📅 スケジュール</div>
+          <div class="side-item">✅ タスク管理</div>
+          <div class="side-item">📁 ドキュメント</div>
+          <div class="side-item">💰 経費精算</div>
+          <div class="side-item">🎓 社内研修</div>
+          <div class="side-item" style="margin-top:24px;color:#888;">⚙️ 設定</div>
+        </div>
+        <div id="decoy-main">
+          <h2>ダッシュボード — 2024年度 業務概況</h2>
+          <div class="decoy-card-grid">
+            <div class="decoy-card"><h3>今月の完了タスク</h3><div class="big-num" id="decoy-tasks">0</div></div>
+            <div class="decoy-card"><h3>未読通知</h3><div class="big-num" id="decoy-notif" style="color:#e07000;">0</div></div>
+            <div class="decoy-card"><h3>今週の会議</h3><div class="big-num" id="decoy-mtg">0</div></div>
+          </div>
+          <table class="decoy-table">
+            <thead><tr><th>No.</th><th>お知らせタイトル</th><th>部門</th><th>日付</th><th>重要度</th></tr></thead>
+            <tbody id="decoy-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+      <div id="decoy-overlay-msg" style="display:none;position:absolute;">
+        <div>👔 ボス接近を検知しました</div>
+        <div class="sub">画面を社内ポータルに切り替えました（自動）</div>
+      </div>
+      <div style="padding:8px 16px;background:#f4f4f4;border-top:1px solid #ddd;font-size:11px;color:#888;display:flex;gap:16px;align-items:center;">
+        <span>© 2024 株式会社やってる感 All rights reserved.</span>
+        <button class="ctrl-btn" style="background:#005a9e;color:#fff;border:none;margin-left:auto;" onclick="triggerBossAlert()">🚨 ボス接近テスト</button>
+        <button class="ctrl-btn" style="background:#1e6b1e;color:#fff;border:none;" onclick="startBossCam()">📷 カメラON</button>
+        <span id="cam-status" style="font-size:11px;color:#888;">カメラ: OFF</span>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+  <script src="js/app.js"></script>
+
+</body>
+</html>
